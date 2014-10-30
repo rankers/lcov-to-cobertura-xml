@@ -83,5 +83,12 @@ class Test(unittest.TestCase):
         self.assertEqual(result['packages']['foo']['lines-covered'], 1)
         self.assertEqual(result['packages']['foo']['lines-total'], 2)
 
+    def test_colon_in_function_name(self):
+        converter = LcovCobertura(
+            'TN:\nSF:foo/file.ext\nDA:1,1\nDA:2,0\nBRDA:1,1,1,1\nBRDA:1,1,2,0\nFN:1,(anonymous_1)\nFN:2,[className namedFn: withColon:]\nFNDA:1,(anonymous_1)\nend_of_record\n')
+        result = converter.parse()
+        desired = result['packages']['foo']['classes']['foo/file.ext']['methods']['[className namedFn: withColon:]']
+        self.assertEqual(desired, '0')
+
 if __name__ == '__main__':
     unittest.main()

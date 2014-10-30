@@ -102,6 +102,7 @@ class LcovCobertura(object):
 
             line_parts = line.split(':', 1)
             input_type = line_parts[0]
+            line_parts = [line_parts[0]] + [":".join(line_parts[1:])]
 
             if input_type == 'SF':
                 # Get file name
